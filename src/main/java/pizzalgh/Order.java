@@ -21,6 +21,12 @@ public class Order {
         BeanUtils.copyProperties(this, ordered);
         ordered.publishAfterCommit();
 
+        try {
+            Thread.sleep((long) (400 + Math.random() * 300));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         //Following code causes dependency to external APIs
         // it is NOT A GOOD PRACTICE. instead, Event-Policy mapping is recommended.
 
@@ -32,11 +38,7 @@ public class Order {
         OrderApplication.applicationContext.getBean(pizzalgh.external.PaymentService.class)
             .doPayment(payment);
 
-         try {
-           Thread.sleep((long) (400 + Math.random() * 300));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
 
 
     }
